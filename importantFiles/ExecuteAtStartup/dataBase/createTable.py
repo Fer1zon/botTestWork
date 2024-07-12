@@ -8,7 +8,8 @@ def createUserTable():#Создание юзерских таблиц
 
     cur.execute("""CREATE TABLE IF NOT EXISTS user (
     id       TEXT PRIMARY KEY NOT NULL,
-    username TEXT
+    name TEXT,
+    phone TEXT
 );
 
 
@@ -18,7 +19,9 @@ def createUserTable():#Создание юзерских таблиц
     id          TEXT PRIMARY KEY,
     userId      TEXT REFERENCES user (id),
     title       TEXT,
-    description TEXT
+    description TEXT,
+    datetime    DATETIME,
+    status      TEXT
 );
 
 

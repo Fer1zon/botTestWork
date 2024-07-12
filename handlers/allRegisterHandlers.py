@@ -15,15 +15,20 @@ from aiogram import types
 
 
 
+from startBotHandlers.auth import getName, getPhoneFromMessage, getPhoneFromButton
+
+
 def registerStartHandler(dp:Dispatcher):#Регистратор хандлеров относящихся к началу пользования ботом
-    dp.register_message_handler(startBotHandlerUser, commands="start")
-    dp.register_message_handler(startBotHandlerAdmin, commands="start")
+    dp.register_message_handler(startBotHandlerUser, commands="start", state = "*")
+    dp.register_message_handler(startBotHandlerAdmin, commands="start", state = "*")
     
 
 
 
 def registerOtherHandler(dp:Dispatcher):#Регистратор хандлеров относящихся к прочему(Выходы, бэки и тп)
-    pass
+    dp.register_message_handler(getName, content_types="text", state = States.USER_NAME)
+    dp.register_message_handler(getPhoneFromMessage, content_types="text", state = States.USER_PHONE_NUMBER)
+    dp.register_message_handler(getPhoneFromButton, content_types=types.ContentTypes.CONTACT, state = States.USER_PHONE_NUMBER)
 
 
 def registerUserHandler(dp:Dispatcher):#Регистрация юзерских хандлеров

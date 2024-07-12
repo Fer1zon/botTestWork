@@ -28,4 +28,8 @@ dp = Dispatcher(bot,storage=MemoryStorage())
 
 class States(StatesGroup):  # Создаём состояния
     
-    pass
+    USER_NAME = State()
+    USER_PHONE_NUMBER = State()
+
+
+    USER_MAIN_MENU = State()
