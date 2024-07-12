@@ -13,6 +13,7 @@ sys.path.append(os.path.dirname(__file__) + '/..')
 from importantFiles.helps import States, dp,bot, cur,conn
 
 from utils.function.database.user import checkUserInDB
+from utils.function.getMessageContent import getMainMenuContent
 
 
 
@@ -27,6 +28,13 @@ async def startBotHandlerUser(message : types.Message, state:FSMContext):
         return 
     
     await state.reset_data()
+
+    content = getMainMenuContent()
+
+    await message.answer(content["sendText"], reply_markup=content["sendKeyboard"])
+    await States.USER_MAIN_MENU.set()
+
+
 
 
 
