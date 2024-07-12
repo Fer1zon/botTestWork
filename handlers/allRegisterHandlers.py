@@ -18,6 +18,9 @@ from aiogram import types
 from startBotHandlers.auth import getName, getPhoneFromMessage, getPhoneFromButton
 
 
+from userHandlers.addTask.mainAddTask import responseAddTask, titleTask, descriptionTask, notificationTask, datetimeTask
+
+
 def registerStartHandler(dp:Dispatcher):#Регистратор хандлеров относящихся к началу пользования ботом
     dp.register_message_handler(startBotHandlerUser, commands="start", state = "*")
     dp.register_message_handler(startBotHandlerAdmin, commands="start", state = "*")
@@ -32,8 +35,11 @@ def registerOtherHandler(dp:Dispatcher):#Регистратор хандлеро
 
 
 def registerUserHandler(dp:Dispatcher):#Регистрация юзерских хандлеров
-    pass
-
+    dp.register_message_handler(responseAddTask, lambda msg: msg.text == "Добавить задачу 📝", state = States.USER_MAIN_MENU)
+    dp.register_message_handler(titleTask, content_types="text", state = States.USER_TITLE_TASK)
+    dp.register_message_handler(descriptionTask, content_types="text", state = States.USER_DESCRIPTION_TASK)
+    dp.register_callback_query_handler(notificationTask, lambda call: call.data in ["True", "False"], state = States.USER_NOTIFICATION_TASK)
+    dp.register_message_handler(datetimeTask, content_types="text", state = States.USER_DATETIME_TASK)
 
 
 

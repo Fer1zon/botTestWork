@@ -23,7 +23,7 @@ cur = conn.cursor()
 
 
 
-bot = Bot(token=config.TEST_TOKEN)
+bot = Bot(token=config.TEST_TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot,storage=MemoryStorage())
 
 class States(StatesGroup):  # Создаём состояния
@@ -33,3 +33,9 @@ class States(StatesGroup):  # Создаём состояния
 
 
     USER_MAIN_MENU = State()
+    
+
+    USER_TITLE_TASK = State()
+    USER_DESCRIPTION_TASK = State()
+    USER_NOTIFICATION_TASK = State()
+    USER_DATETIME_TASK = State()

@@ -16,12 +16,12 @@ def createUserTable():#Создание юзерских таблиц
 """)
     
     cur.execute("""CREATE TABLE IF NOT EXISTS task (
-    id          TEXT PRIMARY KEY,
-    userId      TEXT REFERENCES user (id),
+    id          INTEGER  PRIMARY KEY AUTOINCREMENT,
+    userId      TEXT     REFERENCES user (id),
     title       TEXT,
     description TEXT,
     datetime    DATETIME,
-    status      TEXT
+    status      TEXT     DEFAULT Ожидает
 );
 
 
