@@ -19,7 +19,7 @@ from startBotHandlers.auth import getName, getPhoneFromMessage, getPhoneFromButt
 
 
 from userHandlers.addTask.mainAddTask import responseAddTask, titleTask, descriptionTask, notificationTask, datetimeTask
-from userHandlers.myTask.viewCatalog import responseListTasks
+from userHandlers.myTask.viewCatalog import responseListTasks, choiceTask
 
 
 def registerStartHandler(dp:Dispatcher):#Регистратор хандлеров относящихся к началу пользования ботом
@@ -44,6 +44,8 @@ def registerUserHandler(dp:Dispatcher):#Регистрация юзерских 
 
 
     dp.register_message_handler(responseListTasks, lambda msg: msg.text == "Список задач 📋", state = States.USER_MAIN_MENU)
+
+    dp.register_callback_query_handler(choiceTask, lambda call: call.data.split("|")[0] == "task", state = States.USER_LIST_TASK)
 
 
 

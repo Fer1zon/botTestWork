@@ -41,3 +41,4 @@ class States(StatesGroup):  # Создаём состояния
     USER_DATETIME_TASK = State()
 
     USER_LIST_TASK = State()
+    USER_CHECK_TASK = State()

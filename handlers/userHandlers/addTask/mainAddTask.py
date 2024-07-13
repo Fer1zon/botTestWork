@@ -79,7 +79,6 @@ async def datetimeTask(message:types.Message, state:FSMContext):
         description = data["description"]
         notification = data["notification"]
 
-    print(notification)
     addTask(title, description, notification, deadline, message.from_user.id, cur, conn, bot)
 
 
