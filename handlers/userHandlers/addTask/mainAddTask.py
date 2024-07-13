@@ -12,7 +12,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 
-from utils.function.database.task import addTask
+from utils.function.database.task import addTask, countMyTask
 
 
 from utils.function.getMessageContent import getMainMenuContent
@@ -21,6 +21,9 @@ from utils.function.getMessageContent import getMainMenuContent
 
 
 async def responseAddTask(message:types.Message):
+    if countMyTask(message.from_user.id, cur) >= 100:
+        return await message.answer("Лимит добавления задач 100. Удалите не нужные или завершенные задачи, что-бы добавить новые.")
+    
     sendText = "Отправьте в чат название задачи"
 
     await message.answer(sendText, reply_markup=kb.inMenuKb)

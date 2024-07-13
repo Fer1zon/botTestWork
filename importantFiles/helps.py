@@ -39,3 +39,5 @@ class States(StatesGroup):  # Создаём состояния
     USER_DESCRIPTION_TASK = State()
     USER_NOTIFICATION_TASK = State()
     USER_DATETIME_TASK = State()
+
+    USER_LIST_TASK = State()
