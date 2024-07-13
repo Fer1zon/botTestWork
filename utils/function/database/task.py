@@ -80,6 +80,11 @@ def getTaskData(taskId : str, cur : Cursor):
             }
 
 
+def deleteTaskFromDB(taskId, cur:Cursor, conn:Connection):
+    cur.execute("DELETE FROM task WHERE id =?", (taskId,))
+    conn.commit()
+    scheduler.remove_job(taskId)
+
 
 
 
