@@ -49,7 +49,7 @@ async def choiceTask(call: types.CallbackQuery, state:FSMContext):
 Время исполнения: <i>{taskData["datetime"]}</i>
 Статус: {taskData["status"]}"""
     
-    await call.message.answer(sendText, reply_markup=taskData["sendKeyboard"])
+    await call.message.edit_text(text=sendText, reply_markup=taskData["sendKeyboard"])
 
     await States.USER_CHECK_TASK.set()
     
