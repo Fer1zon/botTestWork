@@ -9,7 +9,7 @@ from userHandlers import keyboard as kb
 
 from aiogram import types
 
-from utils.function.database.task import getTasksKeyboard, countMyTask, checkTaskInDB, getTaskData
+from utils.function.database.task import getTasksKeyboard, countMyTask, checkTaskInDB, getTaskData, searchTasks
 
 
 
@@ -27,7 +27,7 @@ async def responseListTasks(message:types.Message):
     
     
 
-    await message.answer("Вы в списке ваших задач", reply_markup=kb.inMenuKb)
+    await message.answer("Вы в списке ваших задач. Для поиска по списку отправьте в чат название задачи", reply_markup=kb.inMenuKb)
     await message.answer("Список ваших задач:", reply_markup=keyboard)
 
     await States.USER_LIST_TASK.set()

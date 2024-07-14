@@ -98,6 +98,35 @@ def changeTaskStatus(taskId, newStatus, cur:Cursor, conn:Connection):
 
 
 
+def searchTasks(taskTitle : str, userId,  cur:Cursor):
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    for data in cur.execute(f"SELECT id, title, datetime, status FROM task WHERE userId = ? and LOWER(title) LIKE ?", ( userId, '%'+taskTitle.lower()+'%')):
+        taskId = data[0]
+        taskTitle1 = data[1]
+        taskDatetime = data[2]
+        taskStatus = data[3]
+        
+        buttonText = f"{taskTitle1} - {taskDatetime}"
+        if taskStatus == "Ожидает":
+            buttonText += "⚪"
+
+        elif taskStatus == "Закрыто":
+            buttonText += "🔴"
+
+        elif taskStatus == "Выполнено":
+            buttonText += "🟢"
+
+        button = InlineKeyboardButton(buttonText, callback_data=f"task|{taskId}")
+        keyboard.add(button)
+
+
+    if len(keyboard["inline_keyboard"]) == 0:
+        return None
+
+    return keyboard
+
+
+
 
     
 

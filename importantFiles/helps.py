@@ -14,8 +14,17 @@ else:
 
 import sqlite3 
 
+
+
+
+def sqliteLower(value_):
+    return value_.lower()
+
+
 conn = sqlite3.connect(config.dataBasePath)
 cur = conn.cursor()
+
+conn.create_function("LOWER", 1, sqliteLower)
 
 
 
