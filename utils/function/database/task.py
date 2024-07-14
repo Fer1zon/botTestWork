@@ -1,7 +1,7 @@
 from sqlite3 import Cursor, Connection
 from datetime import datetime
 
-from appShedulerFunc.Sample import scheduler, notification
+from appShedulerFunc.Sample import scheduler, notification, removeJob
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -31,7 +31,7 @@ def getMyTask(userId : str, cur : Cursor, limit : int = 100, offset: int = 0):
 
 
 
-def getTaskKeyboard(userId : str, cur : Cursor):
+def getTasksKeyboard(userId : str, cur : Cursor):
     keyboard = InlineKeyboardMarkup(row_width=1)
     for data in getMyTask(userId, cur):
         taskId = data[0]
@@ -45,6 +45,9 @@ def getTaskKeyboard(userId : str, cur : Cursor):
 
         elif taskStatus == "Закрыто":
             buttonText += "🔴"
+
+        elif taskStatus == "Выполнено":
+            buttonText += "🟢"
 
         button = InlineKeyboardButton(buttonText, callback_data=f"task|{taskId}")
         keyboard.add(button)
@@ -69,7 +72,9 @@ def getTaskData(taskId : str, cur : Cursor):
     keyboard = InlineKeyboardMarkup()
     keyboard.add(InlineKeyboardButton("Удалить из списка", callback_data=f"deleteTask|{taskId}"))
     if data[3] != "Выполнено":
-        keyboard.add(InlineKeyboardButton("Задача выполнена✅", callback_data=f"taskComplete|{taskId}"))
+        keyboard.add(InlineKeyboardButton("Задача Выполнено✅", callback_data=f"taskComplete|{taskId}"))
+
+    keyboard.add(InlineKeyboardButton("К списку задач🔙", callback_data="backInTasks"))
 
     return {
         "title" : data[0],
@@ -83,8 +88,13 @@ def getTaskData(taskId : str, cur : Cursor):
 def deleteTaskFromDB(taskId, cur:Cursor, conn:Connection):
     cur.execute("DELETE FROM task WHERE id =?", (taskId,))
     conn.commit()
-    scheduler.remove_job(taskId)
 
+    removeJob(taskId)
+
+
+def changeTaskStatus(taskId, newStatus, cur:Cursor, conn:Connection):
+    cur.execute("UPDATE task SET status =? WHERE id =?", (newStatus, taskId))
+    conn.commit()
 
 
 

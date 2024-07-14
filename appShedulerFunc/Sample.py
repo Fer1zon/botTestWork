@@ -22,6 +22,17 @@ def changeStatus(taskId, newStatus, cur:Cursor, conn:Connection):
 
 
 
+
+def removeJob(jobId):
+    try:
+        scheduler.remove_job(jobId)
+    except:
+        pass
+
+
+
+
+
 async def notification(userId : str, taskId : int, sendNotification : bool, cur : Cursor, conn:Connection, bot:Bot):
     changeStatus(taskId, "Закрыто", cur, conn)
     

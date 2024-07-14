@@ -9,7 +9,7 @@ from userHandlers import keyboard as kb
 
 from aiogram import types
 
-from utils.function.database.task import getTaskKeyboard, countMyTask, checkTaskInDB, getTaskData
+from utils.function.database.task import getTasksKeyboard, countMyTask, checkTaskInDB, getTaskData
 
 
 
@@ -23,7 +23,7 @@ async def responseListTasks(message:types.Message):
     if countMyTask(message.from_user.id, cur) == 0:
         return await message.answer("Пока что у вас нет задач. Создайте их!")
     
-    keyboard = getTaskKeyboard(message.from_user.id, cur)
+    keyboard = getTasksKeyboard(message.from_user.id, cur)
     
     
 
@@ -53,6 +53,18 @@ async def choiceTask(call: types.CallbackQuery, state:FSMContext):
 
     await States.USER_CHECK_TASK.set()
     
+
+
+async def backInTask(call:types.CallbackQuery):
+    keyboard = getTasksKeyboard(call.from_user.id, cur)
+    
+    
+
+    
+    await call.message.edit_text("Список ваших задач:", reply_markup=keyboard)
+
+    await States.USER_LIST_TASK.set()
+
 
 
     
